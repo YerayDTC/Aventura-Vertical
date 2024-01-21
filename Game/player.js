@@ -12,16 +12,16 @@ class Player {
         //carga la imagen del sprite
         this.img = new Image();
         this.img.src = "../Public/img/gorroAbajo.png"
-        this.img.frame = 0; // Índice del cuadro de animación actual
+        this.imgFrame = 0; // Índice del cuadro de animación actual
         this.framesPorFila = 4; // Número de cuadros por fila en el sprite
-        this.frameTick = 0; // contador como el setTimeout (contador de frames)
-        this.isMoving = false;
+        this.frameTick = 0; // contador de frames (intervalo de pixel)
+        // this.currentInterval = 0;
     }
 
     draw() {
         this.ctx.drawImage(
             this.img,
-            (this.img.frame * this.img.width) / this.framesPorFila, //eje X = Ancho de la tira
+            (this.imgFrame * this.img.width) / this.framesPorFila, //eje X = Ancho de la tira
             0, // eje Y = Altura
             this.img.width / this.framesPorFila, // se muestra una cuarta parte de la tira de la imagen
             this.img.height,
@@ -30,21 +30,25 @@ class Player {
             this.w,
             this.h
         );
+
     }
 
     //todo: hace el efecto del movimiento segun la tecla pulsada
     move() {
+        // Ajusta la velocidad según el tiempo entre frames
+        this.frameTick++;
         this.x += this.vx;
         this.y += this.vy;
 
-        //hace que cada x tiempo en frame cambie de posicion al muñeco
-        if(this.frameTick >= 40) {
-            this.img.frame += 1;
+        // incrementa el frameTick
+        if(this.frameTick >= 10 && (this.vx || this.vy)){ //evita que se mueva sin pulsar la tecla
+            this.imgFrame++; // cambia el sprite
             this.frameTick = 0;
         }
-        //esto hace que el frame vuelva a la posicion inicial 0 cuando acabe de recorrer la fila
-        if (this.img.frame > 3) {
-            this.img.frame = 0;
+
+        //esto hace que el frameTick vuelva a la posicion inicial 0 cuando acabe de recorrer la fila
+        if (this.imgFrame > 3) {
+            this.imgFrame = 0;
         }
 }
 
@@ -53,26 +57,18 @@ class Player {
     keyDown(key) {
         if(key === A) {
             this.img.src = "../Public/img/gorroIZquierda.png"
-            // this.img.frame++;
-            this.frameTick++;
             this.vx = -1
         };
         if(key === D) {
             this.img.src = "../Public/img/gorroDerecha.png"
-            // this.img.frame++;
-            this.frameTick++;
             this.vx = 1
         };
         if(key === W) {
             this.img.src = "../Public/img/gorroArriba.png"
-            // this.img.frame++;
-            this.frameTick++;
             this.vy = -1
         };
         if(key === S && !this.isMoving) {
             this.img.src = "../Public/img/gorroAbajo.png"
-            // this.img.frame++;
-            this.frameTick++;
             this.vy = 1;
         }
     }
