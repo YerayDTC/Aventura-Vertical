@@ -2,35 +2,33 @@ class Player {
     constructor(ctx) {
         this.ctx = ctx;
         this.x = 100; // posision horizontal
-        this.y = 100; //posision vertical
-        this.w = 75; //ancho
-        this.h = 75; //alto
+        this.y = 10; //posision vertical
+        this.w = 30; //ancho
+        this.h = 40; //alto
         this.vx = 0; //velocidad horizontal
         this.vy = 0; //velcidad vertical
         this.g = 0; //gravedad
 
         //carga la imagen del sprite
         this.img = new Image();
-        this.img.src = "../Public/img/spritePlayer.png"
-        this.frameIndex = 0; // Índice del cuadro de animación actual
+        this.img.src = "../Public/img/gorroAbajo.png"
+        this.img.frame = 0; // Índice del cuadro de animación actual
         this.framesPorFila = 4; // Número de cuadros por fila en el sprite
+        this.frameTick = 0; // contador como el setTimeout (contador de frames)
+        this.isMoving = false;
     }
 
     draw() {
-        // Limpiar el canvas
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
-        // Calcular la posición del cuadro de animación en el sprite
-        const fila = Math.floor(this.frameIndex / this.framesPorFila);
-        const col = this.frameIndex % this.framesPorFila;
-
-        // Dibujar el jugador con drawImage en lugar de fillRect
         this.ctx.drawImage(
-            this.sprite,
-            col * this.w, fila * this.h,
-            this.w, this.h,
-            this.x, this.y,
-            this.w, this.h
+            this.img,
+            (this.img.frame * this.img.width) / this.framesPorFila, //eje X = Ancho de la tira
+            0, // eje Y = Altura
+            this.img.width / this.framesPorFila, // se muestra una cuarta parte de la tira de la imagen
+            this.img.height,
+            this.x, // te lo pinta en el canvas
+            this.y,
+            this.w,
+            this.h
         );
     }
 
@@ -39,18 +37,44 @@ class Player {
         this.x += this.vx;
         this.y += this.vy;
 
-        // Actualizar el índice del cuadro de animación
-        if (this.vx !== 0 || this.vy !== 0) {
-            this.frameIndex = (this.frameIndex + 1) % 16;
+        //hace que cada x tiempo en frame cambie de posicion al muñeco
+        if(this.frameTick >= 40) {
+            this.img.frame += 1;
+            this.frameTick = 0;
         }
-    }
+        //esto hace que el frame vuelva a la posicion inicial 0 cuando acabe de recorrer la fila
+        if (this.img.frame > 3) {
+            this.img.frame = 0;
+        }
+}
 
     //todo: recibe el evento del setListener de la clase Game y detecta que tecla se esta pulsando
+    
     keyDown(key) {
-        if(key === A) this.vx = -1;
-        if(key === D) this.vx = 1;
-        if(key === W) this.vy = -1;
-        if(key === S) this.vy = 1;
+        if(key === A) {
+            this.img.src = "../Public/img/gorroIZquierda.png"
+            // this.img.frame++;
+            this.frameTick++;
+            this.vx = -1
+        };
+        if(key === D) {
+            this.img.src = "../Public/img/gorroDerecha.png"
+            // this.img.frame++;
+            this.frameTick++;
+            this.vx = 1
+        };
+        if(key === W) {
+            this.img.src = "../Public/img/gorroArriba.png"
+            // this.img.frame++;
+            this.frameTick++;
+            this.vy = -1
+        };
+        if(key === S && !this.isMoving) {
+            this.img.src = "../Public/img/gorroAbajo.png"
+            // this.img.frame++;
+            this.frameTick++;
+            this.vy = 1;
+        }
     }
 
     keyUp(key) {
