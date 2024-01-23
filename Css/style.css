@@ -10,6 +10,10 @@
     justify-content: space-around;
 }
 
-#star {
-    background-color: green;
+#start {
+    background-color: rgb(86, 151, 86);
+}
+
+#reset {
+    background-color: cornflowerblue
 }

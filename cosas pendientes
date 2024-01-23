@@ -1,4 +1,7 @@
 
-Implementaciones........................................................................................
-crear un boton para empezar el juego. se crea en el html y la funcionalidad en el script.
-dibujar el cuadrado del player
+dia 21.01.24
+quitar el parpadeo del jugador cuando se mueve
+crear el background
+
+dia22.01.24
+meter colisiones con el background
