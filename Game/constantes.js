@@ -7,3 +7,6 @@ const UP = 38;
 const DOWN = 40;
 const LEFT = 37;
 const RIGTH = 39;
+
+const ALT = 16; //salto
+const timer = 400; // tiempo para el setTimeout

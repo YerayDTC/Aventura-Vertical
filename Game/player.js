@@ -2,20 +2,22 @@ class Player {
     constructor(ctx) {
         this.ctx = ctx;
         this.x = 100; // posision horizontal
-        this.y = 10; //posision vertical
-        this.w = 30; //ancho
-        this.h = 40; //alto
+        this.y = 300; //posision vertical
+        this.w = 15; //ancho
+        this.h = 20; //alto
         this.vx = 0; //velocidad horizontal
         this.vy = 0; //velcidad vertical
         this.g = 0; //gravedad
 
         //carga la imagen del sprite
         this.img = new Image();
-        this.img.src = "../Public/img/gorroAbajo.png"
+        this.img.src = "../Public/img/gorroAbajoR.png"
         this.imgFrame = 0; // Índice del cuadro de animación actual
         this.framesPorFila = 4; // Número de cuadros por fila en el sprite
         this.frameTick = 0; // contador de frames (intervalo de pixel)
-        // this.currentInterval = 0;
+        
+        this.isJumping = false; // Indica si el jugador está en estado de salto
+        // this.initialY = this.y; // Guarda la posición inicial en el eje Y
     }
 
     draw() {
@@ -39,6 +41,7 @@ class Player {
         this.frameTick++;
         this.x += this.vx;
         this.y += this.vy;
+        this.vy += this.g;
 
         // incrementa el frameTick
         if (this.frameTick >= 10 && (this.vx || this.vy)) { //evita que se mueva sin pulsar la tecla
@@ -79,30 +82,36 @@ class Player {
 
     keyDown(key) {
         if (key === A) {
-            this.img.src = "../Public/img/gorroIZquierda.png"
+            this.img.src = "../Public/img/gorroIZquierdaR.png"
             this.vx = -1
         };
         if (key === D) {
-            this.img.src = "../Public/img/gorroDerecha.png"
+            this.img.src = "../Public/img/gorroDerechaR.png"
             this.vx = 1
         };
         if (key === W) {
-            this.img.src = "../Public/img/gorroArriba.png"
+            this.img.src = "../Public/img/gorroArribaR.png"
             this.vy = -1
         };
         if (key === S && !this.isMoving) {
-            this.img.src = "../Public/img/gorroAbajo.png"
+            this.img.src = "../Public/img/gorroAbajoR.png"
             this.vy = 1;
         }
 
-        // if (key === ALT && this.vy === 0) {
-        //     this.vy = -4
-        //     this.g = 0.2
-        //     ALT = 0;
-        //     setTimeout(() => {
-        //         ALT = 16;
-        //     }, 400);
-        // }
+        //salto
+        if (key === ALT && this.vy === 0) {
+            while (this.isJumping = false) {
+                this.vy = -4; // indica que el jugador se moverá hacia arriba en el eje Y, simulando el salto
+                this.g = 0.2; //lo que sugiere que hay una fuerza descendente actuando sobre el jugador durante el salto
+                ALT = 0;
+                // this.isJumping = true;
+                setTimeout(() => {
+                    ALT = 16;
+                    
+                }, timer);
+            }
+        }
+
     }
 
     keyUp(key) {
