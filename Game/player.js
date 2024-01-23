@@ -41,7 +41,7 @@ class Player {
         this.y += this.vy;
 
         // incrementa el frameTick
-        if(this.frameTick >= 10 && (this.vx || this.vy)){ //evita que se mueva sin pulsar la tecla
+        if (this.frameTick >= 10 && (this.vx || this.vy)) { //evita que se mueva sin pulsar la tecla
             this.imgFrame++; // cambia el sprite
             this.frameTick = 0;
         }
@@ -50,27 +50,59 @@ class Player {
         if (this.imgFrame > 3) {
             this.imgFrame = 0;
         }
+        //todo: bloqueo para el limite superior.
+        if (this.y <= 0) {
+            this.y = 0;
+            this.vy = 0;
+        }
+
+        //todo: bloqueo para el limite inferior.
+        if(this.y + this.h >= this.ctx.canvas.height) {
+            this.y = this.ctx.canvas.height - this.h;
+            this.vy = 0;
+    }
+
+        //todo: bloqueo para el limite izquierdo.
+        if(this.x <= 0) {
+            this.x = 0;
+            this.vx = 0;
+        }
+
+        //todo: bloqueo para el limite derecho.
+        if(this.x + this.w >= this.ctx.canvas.width) {
+            this.x = this.ctx.canvas.width - this.w;
+            this.vx = 0;
+        }
 }
 
     //todo: recibe el evento del setListener de la clase Game y detecta que tecla se esta pulsando
-    
+
     keyDown(key) {
-        if(key === A) {
+        if (key === A) {
             this.img.src = "../Public/img/gorroIZquierda.png"
             this.vx = -1
         };
-        if(key === D) {
+        if (key === D) {
             this.img.src = "../Public/img/gorroDerecha.png"
             this.vx = 1
         };
-        if(key === W) {
+        if (key === W) {
             this.img.src = "../Public/img/gorroArriba.png"
             this.vy = -1
         };
-        if(key === S && !this.isMoving) {
+        if (key === S && !this.isMoving) {
             this.img.src = "../Public/img/gorroAbajo.png"
             this.vy = 1;
         }
+
+        // if (key === ALT && this.vy === 0) {
+        //     this.vy = -4
+        //     this.g = 0.2
+        //     ALT = 0;
+        //     setTimeout(() => {
+        //         ALT = 16;
+        //     }, 400);
+        // }
     }
 
     keyUp(key) {

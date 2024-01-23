@@ -14,4 +14,4 @@ if(game.interval) {
     game.start();
     startButton.innerText = "Stop";
 }
-})
+});

@@ -1,8 +1,9 @@
 class Game {
     constructor(ctx) {
         this.ctx = ctx;
-        this.interval = null;
         this.player = new Player(ctx);
+        this.background = new Background(ctx);
+        this.interval = null;
         this.setListeners();
     }
 
@@ -24,6 +25,7 @@ class Game {
     }
 
     draw() {
+        this.background.draw();
         this.player.draw();
     }
 
