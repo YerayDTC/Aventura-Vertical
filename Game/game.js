@@ -3,6 +3,7 @@ class Game {
         this.ctx = ctx;
         this.player = new Player(ctx);
         this.background = new Background(ctx);
+        this.caja = new Caja(ctx);
         this.interval = null;
         this.setListeners();
     }
@@ -27,6 +28,8 @@ class Game {
     draw() {
         this.background.draw();
         this.player.draw();
+        this.caja.draw();
+    
     }
 
     move() {
@@ -36,7 +39,8 @@ class Game {
     }
 
     checkCollision() {
-
+        this.player.collides(this.caja);
+        this.caja.collides(this.player);
     }
 
     setListeners() { //permite hacer keyup y keydown para usar teclado para mover el personaje
