@@ -2,20 +2,23 @@ class Player {
     constructor(ctx) {
         this.ctx = ctx;
         this.x = 100; // posision horizontal
-        this.y = 10; //posision vertical
-        this.w = 30; //ancho
-        this.h = 40; //alto
+        this.y = 300; //posision vertical
+        this.w = 11; //ancho
+        this.h = 18; //alto
         this.vx = 0; //velocidad horizontal
         this.vy = 0; //velcidad vertical
-        this.g = 0; //gravedad
+        this.rx = 0; //rozamiento en x
+        this.ry = 0; //rozamiento en y
 
         //carga la imagen del sprite
         this.img = new Image();
-        this.img.src = "../Public/img/gorroAbajo.png"
+        this.img.src = "../Public/img/gorroAbajoR.png"
         this.imgFrame = 0; // Índice del cuadro de animación actual
         this.framesPorFila = 4; // Número de cuadros por fila en el sprite
         this.frameTick = 0; // contador de frames (intervalo de pixel)
-        // this.currentInterval = 0;
+        
+        this.direction = "down";
+        
     }
 
     draw() {
@@ -39,6 +42,16 @@ class Player {
         this.frameTick++;
         this.x += this.vx;
         this.y += this.vy;
+        this.vx += this.rx;
+        this.vy += this.ry;
+
+        if(this.vy === 0) {
+            this.ry = 0;
+        }
+
+        if(this.vx === 0) {
+            this.rx = 0;
+        }
 
         // incrementa el frameTick
         if (this.frameTick >= 10 && (this.vx || this.vy)) { //evita que se mueva sin pulsar la tecla
@@ -79,30 +92,55 @@ class Player {
 
     keyDown(key) {
         if (key === A) {
-            this.img.src = "../Public/img/gorroIZquierda.png"
+            this.img.src = "../Public/img/gorroIZquierdaR.png"
             this.vx = -1
+            this.direction = "left";
         };
         if (key === D) {
-            this.img.src = "../Public/img/gorroDerecha.png"
+            this.img.src = "../Public/img/gorroDerechaR.png"
             this.vx = 1
+            this.direction = "right"
         };
         if (key === W) {
-            this.img.src = "../Public/img/gorroArriba.png"
+            this.img.src = "../Public/img/gorroArribaR.png"
             this.vy = -1
+            this.direction = "up";
         };
         if (key === S && !this.isMoving) {
-            this.img.src = "../Public/img/gorroAbajo.png"
+            this.img.src = "../Public/img/gorroAbajoR.png"
             this.vy = 1;
+            this.direction = "down";
         }
 
-        // if (key === ALT && this.vy === 0) {
-        //     this.vy = -4
-        //     this.g = 0.2
-        //     ALT = 0;
-        //     setTimeout(() => {
-        //         ALT = 16;
-        //     }, 400);
-        // }
+        //salto
+        if (key === ALT) {
+            switch (this.direction) {
+                case "up":
+                    this.vy = -4; // va hacia arriba
+                    this.ry = 0.25; // contrarresta la presion del movimiento
+                    break;
+                case "left":
+                    this.vx = -4;
+                    this.rx = 0.25;
+                    break;
+                case "right":
+                    this.vx = 4;
+                    this.rx = -0.25;
+                    break;
+                case "down":
+                    this.vy = 4;
+                    this.ry = -0.25;
+                    break;
+            
+                default:
+                    break;
+            }
+                ALT = 0;
+                setTimeout(() => {
+                    ALT = 16;
+                }, timer);
+        }
+
     }
 
     keyUp(key) {
@@ -110,8 +148,10 @@ class Player {
         // if (key === D) this.vx = 0;
         // if (key === W) this.vy = 0;
         // if (key === S) this.vy = 0;
-        if (key === A || key === D) this.vx = 0;
-        if (key === W || key === S) this.vy = 0;
+        if (key === A || key === D) {this.vx = this.rx = 0}; // en una linea
+        if (key === W || key === S) {this.vy = 0; this.ry = 0}; // en dos lineas
+
+        
     }
 
     collides(obstaculo) {

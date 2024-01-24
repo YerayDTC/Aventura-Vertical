@@ -1,7 +1,58 @@
+Para crear un fondo similar al de Bomberman en un juego 2D utilizando JavaScript y Canvas, puedes seguir estos pasos básicos. Vamos a crear un fondo con patrones de cuadrados que se asemejen al estilo de Bomberman. En este ejemplo, asumiré que ya tienes un archivo HTML con un elemento canvas en el cuerpo del documento.
 
-dia 21.01.24
-quitar el parpadeo del jugador cuando se mueve
-crear el background
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego con Fondo de Bomberman</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+  <script src="tu_script.js"></script>
+</body>
+</html>
+```
 
-dia22.01.24
-meter colisiones con el background
+Ahora, en tu archivo JavaScript (tu_script.js), puedes agregar el código para dibujar el fondo:
+
+```javascript
+// Obtén el canvas y el contexto
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Establece el tamaño del canvas
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Tamaño de los cuadrados del fondo
+const squareSize = 40;
+
+// Función para dibujar el fondo
+function drawBackground() {
+  // Colores para los cuadrados (puedes personalizarlos)
+  const colors = ['#D9D9D9', '#BFBFBF'];
+
+  for (let y = 0; y < canvas.height; y += squareSize) {
+    for (let x = 0; x < canvas.width; x += squareSize) {
+      const colorIndex = (x / squareSize + y / squareSize) % colors.length;
+      ctx.fillStyle = colors[colorIndex];
+      ctx.fillRect(x, y, squareSize, squareSize);
+    }
+  }
+}
+
+// Llama a la función para dibujar el fondo
+drawBackground();
+```
+
+En este código, la función `drawBackground` utiliza dos colores (gris claro y gris oscuro) para alternar entre los cuadrados del fondo. Puedes personalizar los colores según tus preferencias. Ajusta el tamaño de los cuadrados cambiando el valor de la variable `squareSize`.
+
+Este es un ejemplo básico, y puedes expandirlo según las necesidades de tu juego. Además, si estás desarrollando un juego más complejo, podrías considerar el uso de un motor de juegos como Phaser o PixiJS para simplificar el desarrollo.
