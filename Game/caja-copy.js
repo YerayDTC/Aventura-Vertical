@@ -53,6 +53,10 @@ class Caja {
             this.frameActual = (this.frameActual + 1) % this.explosionFrames;
         }
         this.explosionCounter++;
+        //hay que hacer que desaparezca la caja
+        // if (this.explosionCounter === explosionFrames){
+        //     this.imgBox = -10000;
+        // }
     }
     
     // animate() {
