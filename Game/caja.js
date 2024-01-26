@@ -3,42 +3,67 @@ class Caja {
         this.ctx = ctx;
         this.x = 150;
         this.y = 50;
-        this.w = 10; // Ancho del sprite
-        this.h = 10; // Alto del sprite
+        this.w = 40; // Ancho del sprite (ajusta según tus necesidades)
+        this.h = 40; // Alto del sprite (ajusta según tus necesidades)
         this.vx = 0;
         this.vy = 0;
-        this.spriteSpeed = 0.1; //velocidad del sprite
-        this.imgFrame = 0;
-        this.framesPorFila = 4; // Número de cuadros por fila en el sprite
-        this.framesPorColumn = 3 //Número de cuadros por columna en el sprite
+        this.spriteSpeed = 0.2; // Velocidad del sprite
+        this.frameActual = 0;
+        this.numColumnas = 4; // Número de columnas en el sprite
+        this.numFilas = 3; // Número de filas en el sprite
+        this.frameWidth = 0; // Ancho de cada frame en el sprite
+        this.frameHeight = 0; // Alto de cada frame en el sprite
+        this.explosionFrames = 12; // Número total de frames en la animación de explosión
+
+        this.explosionSpeed = 0.3; // Velocidad de la animación de explosión (ajusta según tus necesidades)
+        this.explosionCounter = 0; // Contador para controlar la velocidad de la animación
 
         // Carga la imagen del sprite
         this.imgBox = new Image();
-        this.imgBox.src = "../Public/img/cajaRota128.png"; 
+        this.imgBox.src = "../Public/img/cajaA.png";
+
+        // Calcula el ancho y alto de cada frame en el sprite
+        this.imgBox.onload = () => {
+            this.frameWidth = this.imgBox.width / this.numColumnas;
+            this.frameHeight = this.imgBox.height / this.numFilas;
+        };
     }
 
     draw() {
-        // Calcula la posición en el sprite del cuadro actual
-        const frameX = this.imgFrame % this.framesPorFila;
-        const frameY = Math.floor(this.imgFrame / this.framesPorFila);
+        // Calcular las coordenadas de textura
+        const fila = Math.floor(this.frameActual / this.numColumnas);
+        const columna = this.frameActual % this.numColumnas;
 
-        // Dibuja el sprite en el lienzo usando drawImage
+        // Dibujar la subimagen actual del sprite en el canvas
         this.ctx.drawImage(
-            this.imgBox,        // Imagen del sprite
-            frameX * this.w,    // Posición X en el sprite del cuadro actual
-            frameY * this.h,    // Posición Y en el sprite del cuadro actual
-            this.w,             // Ancho del cuadro en el sprite
-            this.h,             // Alto del cuadro en el sprite
-            this.x,             // Posición X en el lienzo
-            this.y,             // Posición Y en el lienzo
-            this.w,             // Ancho en el lienzo
-            this.h              // Alto en el lienzo
+            this.imgBox,
+            columna * this.frameWidth, fila * this.frameHeight,
+            this.frameWidth, this.frameHeight,
+            this.x, this.y,
+            this.w, this.h
         );
     }
-
-    move() {
    
+
+    //!explode puede ajustarse la velocidad de la animacion y animate no, pero hacen la misma animacion. usar uno dentro de la cosision
+    explode() {
+        // Realizar la animación de explosión
+        if (this.explosionCounter % Math.floor(1 / this.explosionSpeed) === 0) {
+            // Cambiar a la siguiente frame en la animación de explosión
+            this.frameActual = (this.frameActual + 1) % this.explosionFrames;
+        }
+        this.explosionCounter++;
+        //hay que hacer que desaparezca la caja
+        // if (this.explosionCounter === explosionFrames){
+        //     this.imgBox = -10000;
+        // }
     }
+    
+    // animate() {
+    //     // Incrementar el contador de frames y reiniciarlo si alcanza el final
+    //     this.frameActual = (this.frameActual + 1) % (this.numFilas * this.numColumnas);
+    // }
+  
 
     collides(player) {
         if (
@@ -48,18 +73,9 @@ class Caja {
             this.y + this.h > player.y
         ) {
             // Hay colisión con el jugador, inicia la animación del sprite
-            this.animateSprite();
-            console.log("hola")
-        }
-    }
-
-    animateSprite() {
-        // Actualiza la animación del sprite cuando hay colisión
-        this.imgFrame += this.spriteSpeed;
-        if (this.imgFrame >= this.framesPorFila * undefined) {
-            // Reinicia la animación cuando alcanza el final del sprite
-            this.imgFrame = 0;
+            this.explode()
         }
     }
 }
+
 

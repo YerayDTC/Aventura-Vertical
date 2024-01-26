@@ -25,6 +25,7 @@ class Background {
     draw() {
         // Dibuja la imagen en el contexto usando la posición, ancho y alto especificados
         this.ctx.drawImage(this.img,this.x, this.y, this.w, this.h);
+        this.caja.draw();
         // Llama al método para dibujar el mapa de cajas
         this.drawBoxMap();
     }
@@ -34,42 +35,37 @@ class Background {
         // Definir el tamaño de cada caja y el número de filas y columnas
         // let boxSize = this.w / 24 ; // Ajusta el tamaño de la caja según el número de columnas
         let boxSize = this.caja.h * this.caja.w ;
-        console.log("tamaño de la caja " + boxSize);
         let rows = 10;
         let cols = 24;
 
-        let boxMap = [
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-        ];
+        // let boxMap = [
+        //     [1, 0, 1, 0, 1, 0, 1, 0],
+        //     [0, 1, 0, 1, 0, 1, 0, 1],
+        //     [1, 0, 1, 0, 1, 0, 1, 0],
+        //     [0, 1, 0, 1, 0, 1, 0, 1],
+        //     [1, 0, 1, 0, 1, 0, 1, 0],
+        //     [0, 1, 0, 1, 0, 1, 0, 1],
+        //     [1, 0, 1, 0, 1, 0, 1, 0],
+        //     [0, 1, 0, 1, 0, 1, 0, 1],
+        // ];
 
         // Crear un array bidimensional para representar el mapa de cajas
-        boxMap = new Array(rows);
+
+        let boxMap = new Array(rows);
         for (let i = 0; i < rows; i++) {
             boxMap[i] = new Array(cols);
             for (let j = 0; j < cols; j++) {
                 // Inicializar el valor de cada caja a 1 o 0 según tus necesidades
                 // Por ejemplo, aquí se establece un patrón sencillo de alternancia
                 boxMap[i][j] = (i + j) % 2; // 1 o 0
-            }
-        }
 
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < cols; j++) {
                 let boxX = this.x + j * boxSize;
                 let boxY = this.y + i * boxSize;
 
                 // Dibujar caja
                 if (boxMap[i][j] === 1) {
-                    this.ctx.drawImage(this.imgBox, boxX, boxY, 10, 10)
-                    // this.ctx.fillStyle = "#009900"; // Color de la caja (puedes cambiarlo)
-                    // this.ctx.fillRect(boxX, boxY, boxSize, boxSize);
+                    // this.ctx.drawImage(this.imgBox, 100, 100, 40, 40);
+                    console.log("caja");
                 }
             }
         }
