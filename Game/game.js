@@ -15,6 +15,9 @@ class Game {
             this.draw();
             this.checkCollision();
         }, 1000 / 60)
+
+        // Llama a requestAnimationFrame para repetir el bucle en el próximo frame
+        // requestAnimationFrame(this.start);
     }
 
     stop() {
