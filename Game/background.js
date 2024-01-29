@@ -13,30 +13,35 @@ class Background {
         // Establecimiento de la ruta de la imagen para el fondo
         this.imgBackground.src = "../Public/img/pngtree-forest-landscape-arcade-game-background-image_674105.jpg";
         this.cajas = []; // Array para almacenar instancias de la clase Caja
-        this.agregarCaja();
-        console.log(JSON.stringify(this.cajas, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
-
-        // this.caja = new Caja(ctx); //Instancia de la caja (No se si es necesaria)
+        this.caja = new Caja(ctx); //Instancia de la caja (No se si es necesaria)
         // this.caja.src = "../Public/img/cajaA.png"
+        // console.log(JSON.stringify(this.caja, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
+        
+        this.agregarCaja();
+        // console.log(JSON.stringify(this.cajas, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
+     
 
     }
 
     // Método para renderizar fondo y cajas en el canvas
     draw() {
         this.ctx.drawImage(this.imgBackground, this.x, this.y, this.w, this.h); // Renderiza el fondo
-        // this.caja.draw();
+        this.caja.draw();
         
         //Renderiza todas las cajas almacenadas
         this.cajas.forEach(caja => {
             caja.draw(); // Dibuja la caja en el canvas
             caja.animacion(); // Ejecuta la lógica de animación de la caja
         });
+        // console.log(JSON.stringify(this.caja, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
     }
 
 
     agregarCaja() {
         let nuevaCaja = new Caja(ctx);
         this.cajas.push(nuevaCaja);
+        console.log(JSON.stringify(this.cajas, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
+
     }
 
 }
