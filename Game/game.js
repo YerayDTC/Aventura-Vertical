@@ -37,7 +37,7 @@ class Game {
     stop() {
         clearInterval(this.interval);
     }
-*
+
     clear() {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.cajas = this.cajas.filter(caja => caja.isVisible()) // si ha explotado lo elimina del array
@@ -48,8 +48,8 @@ class Game {
         this.background.draw();
         this.player.draw();
 
-        this.cajas.forEach(element => {
-            element.draw();
+        this.cajas.forEach(e => {
+            e.draw();
         });
     
     }
