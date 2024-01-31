@@ -16,7 +16,6 @@ class Background {
     // Método para renderizar fondo y cajas en el canvas
     draw() {
         this.ctx.drawImage(this.imgBackground, this.x, this.y, this.w, this.h); // Renderiza el fondo
-        //  console.log(JSON.stringify(this.caja, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
     }
 }
 

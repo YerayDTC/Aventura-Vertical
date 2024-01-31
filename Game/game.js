@@ -60,6 +60,7 @@ class Game {
     // Método para mover los elementos del juego
     move() {
         this.player.move(); // Mueve al jugador
+        
 
         // Mueve cada caja en el array de cajas
         this.cajas.forEach(caja => {
@@ -90,35 +91,27 @@ class Game {
         });
     }
 
-    // Método para agregar una nueva caja al juego
-    // addCaja() {
-    //     let caja = new Caja(ctx); // Crea una nueva caja
-    //     this.cajas.push(caja); // Agrega la caja al array de cajas
-    // }
-
     grid() {
         // Tamaño de la cuadrícula y número de filas y columnas
         let gridSize = 35; // Tamaño de la cuadrícula
         let numFilas = Math.floor(this.ctx.canvas.height / gridSize); // Número de filas
         let numColums = Math.floor(this.ctx.canvas.width / gridSize); // Número de columnas
 
-        Array.from({ length: numFilas }).map((_, fil) => {
-            return Array.from({length: numColums}).map((_, col) => {
+        // Crear cajas en cada ubicación de la cuadrícula
+        for (let fil = 0; fil < numFilas; fil++) {
+            for (let col = 0; col < numColums; col++) {
                 // Calcular la posición de la caja en la cuadrícula
-                let x = col * gridSize;
-                let y = fil * gridSize
+                const x = col * gridSize;
+                const y = fil * gridSize;
+
                 // Crear una nueva caja en la posición calculada
                 let caja = new Caja(ctx, x, y);
 
                 // Agregar la caja al array de cajas del juego
                 this.cajas.push(caja);
-                console.log(this.cajas)
-                // console.log(JSON.stringify(this.cajas, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
-
-            })
+            }
         }
-
-    )}
+    }
 
 
 
@@ -141,16 +134,20 @@ Agrega cada caja creada al array de cajas del juego. */
 // const numCols = Math.floor(canvas.width / gridSize); // Número de columnas
 
 // // Crear cajas en cada ubicación de la cuadrícula
-// for (let fil = 0; fil < numRows; fil++) {
-//     for (let col = 0; col < numCols; col++) {
+// Array.from({ length: numFilas }).map((_, fil) => {
+//     return Array.from({length: numColums}).map((_, col) => {
 //         // Calcular la posición de la caja en la cuadrícula
-//         const x = col * gridSize;
-//         const y = fil * gridSize;
-
+//         let x = col * gridSize;
+//         let y = fil * gridSize
 //         // Crear una nueva caja en la posición calculada
 //         let caja = new Caja(ctx, x, y);
 
 //         // Agregar la caja al array de cajas del juego
-//         game.cajas.push(caja);
-//     }
+//         this.cajas.push(caja);
+//         console.log(this.cajas)
+//         // console.log(JSON.stringify(this.cajas, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
+
+//     })
 // }
+
+// )}

@@ -55,6 +55,8 @@ class Caja {
     // Método para verificar si la caja es visible
     isVisible() {
         return this.dispose; // Devuelve el estado de dispose
+        //  console.log(JSON.stringify(this.caja, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
+
     }
 
     // Método para detectar colisiones con otro objeto

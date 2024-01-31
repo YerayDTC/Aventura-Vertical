@@ -17,8 +17,9 @@ class Player {
         this.imgFrame = 0; // Índice del cuadro de animación actual
         this.framesPorFila = 4; // Número de cuadros por fila en el sprite
         this.frameTick = 0; // Contador de frames (intervalo de píxel)
-
         this.direction = "down"; // Dirección actual del jugador
+        this.bombas = []; // Array para almacenar las bombas
+
     }
 
     // Método para dibujar al jugador en el canvas
@@ -105,6 +106,9 @@ class Player {
             this.vy = 1;
             this.direction = "down";
         }
+        if (key === B) {
+            this.img.src = "../Public/img/bomba.png";
+        }
 
         // Controla el salto del jugador
         if (key === ALT) {
@@ -144,6 +148,11 @@ class Player {
         // if (key === S) this.vy = 0;
         if (key === A || key === D) { this.vx = this.rx = 0 }; // en una linea
         if (key === W || key === S) { this.vy = 0; this.ry = 0 }; // en dos lineas
+    }
+
+    //!hacer el disparo de la bomba
+    shoot() {
+        const bomba = new Bomba(this.ctx, x, y, direccion)
     }
  
     // Método para detectar colisiones con otro objeto

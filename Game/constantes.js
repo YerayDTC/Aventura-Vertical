@@ -10,3 +10,4 @@ const RIGTH = 39;
 
 const ALT = 16; //salto
 const timer = 400; // tiempo para el setTimeout
+const B = 66; // bomba
