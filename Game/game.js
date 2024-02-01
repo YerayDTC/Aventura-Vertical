@@ -39,11 +39,13 @@ class Game {
         this.interval = null; // Reinicia el intervalo
     }
 
-    // Método para limpiar el canvas
+    // Método para limpiar el canvas, limpia los arrays para que no se llenen.
     clear() {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height); // Borra el canvas
         // Filtra las cajas visibles y actualiza el array de cajas, si no es visible la elimina del array
         this.cajas = this.cajas.filter(caja => caja.isVisible());
+        this.player.bombas = this.player.bombas.filter(bomba => bomba.isVisible());
+        console.log(this.player.bombas);
     }
 
     // Método para dibujar los elementos del juego

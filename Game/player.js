@@ -18,6 +18,7 @@ class Player {
         this.framesPorFila = 4; // Número de cuadros por fila en el sprite
         this.frameTick = 0; // Contador de frames (intervalo de píxel)
         this.direction = "down"; // Dirección actual del jugador
+
         this.bombas = []; // Array para almacenar las bombas
 
     }
@@ -35,6 +36,11 @@ class Player {
             this.w, // Ancho del jugador en el canvas
             this.h // Alto del jugador en el canvas
         );
+
+        // Dibuja cada bomba en el array, si no se hace esto no se pinta en el canvas.
+        this.bombas.forEach(bomba =>{
+            bomba.draw(); // llama a la funcion draw de la clase bomba para pintarla dentro del array por asi decirlo
+        })
     }
 
     // Método para controlar el movimiento del jugador
@@ -82,6 +88,10 @@ class Player {
             this.x = this.ctx.canvas.width - this.w;
             this.vx = 0;
         }
+
+        this.bombas.forEach(bomba => {
+            bomba.move(); // llama a la funcion move de la clase bomba para pintar el movimiento dentro del array por asi decirlo
+        })
     }
 
     // Método para manejar eventos de teclado al presionar una tecla
@@ -107,7 +117,12 @@ class Player {
             this.direction = "down";
         }
         if (key === B) {
-            this.img.src = "../Public/img/bomba.png";
+            this.putBomb();
+        }
+        if(key === N) {
+            this.bombas.forEach(element => {
+                element.explosion = true;
+            });
         }
 
         // Controla el salto del jugador
@@ -151,8 +166,9 @@ class Player {
     }
 
     //!hacer el disparo de la bomba
-    shoot() {
-        const bomba = new Bomba(this.ctx, x, y, direccion)
+    putBomb() {
+        const bomba = new Bomba(this.ctx, this.x, this.y);
+        this.bombas.push(bomba);
     }
  
     // Método para detectar colisiones con otro objeto
