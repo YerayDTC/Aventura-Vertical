@@ -43,9 +43,9 @@ class Game {
     clear() {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height); // Borra el canvas
         // Filtra las cajas visibles y actualiza el array de cajas, si no es visible la elimina del array
-        this.cajas = this.cajas.filter(caja => caja.isVisible());
-        this.player.bombas = this.player.bombas.filter(bomba => bomba.isVisible());
-        console.log(this.player.bombas);
+        this.cajas = this.cajas.filter(e => e.isVisible());
+        this.player.bombas = this.player.bombas.filter(e => e.isVisible());
+        console.log("array de bombas " + this.player.bombas);
     }
 
     // Método para dibujar los elementos del juego
@@ -54,29 +54,37 @@ class Game {
         this.player.draw(); // Dibuja al jugador
 
         // Dibuja cada caja en el array de cajas
-        this.cajas.forEach(caja => {
-            caja.draw();
+        this.cajas.forEach(element => {
+            element.draw();
         });
     }
 
     // Método para mover los elementos del juego
     move() {
         this.player.move(); // Mueve al jugador
-        
 
         // Mueve cada caja en el array de cajas
-        this.cajas.forEach(caja => {
-            caja.move();
+        this.cajas.forEach(element => {
+            element.move();
         });
     }
 
     // Método para comprobar colisiones
     checkCollision() {
 
-        this.cajas.forEach((element) => {
-            if(element.collides(this.player)) {
-                element.colliding = true; // 
-            }
+        // this.cajas.forEach((element) => {
+        //     if(element.collides(this.player)) {
+        //         element.colliding = true; // 
+        //     }
+        // });
+
+        //!hay que hacer que colisione con el fuego de la explosion
+        this.cajas.forEach((caja) => {
+            this.player.bombas.forEach(bomba => {
+                if (caja.collides(bomba)) {
+                    caja.colliding = true; // 
+                }   
+            });
         });
     }
 
@@ -114,42 +122,4 @@ class Game {
             }
         }
     }
-
-
-
 }
-
-/*ChatGPT
-Una idea para colocar las cajas en el lienzo como si fuera una cuadrícula es generar un bucle que recorra todas las celdas de la cuadrícula y, para cada celda, crear una caja en esa ubicación. Aquí tienes un ejemplo de cómo podrías implementarlo:
-
-Define el tamaño de la cuadrícula y el número de filas y columnas.
-Utiliza un bucle anidado para recorrer cada fila y columna de la cuadrícula.
-Calcula la posición x e y de cada caja en función del índice de fila y columna, y el tamaño de la cuadrícula.
-Crea una nueva instancia de la clase Caja en cada posición calculada.
-Agrega cada caja creada al array de cajas del juego. */
-
-
-
-// // Tamaño de la cuadrícula y número de filas y columnas
-// const gridSize = 50; // Tamaño de la cuadrícula
-// const numRows = Math.floor(canvas.height / gridSize); // Número de filas
-// const numCols = Math.floor(canvas.width / gridSize); // Número de columnas
-
-// // Crear cajas en cada ubicación de la cuadrícula
-// Array.from({ length: numFilas }).map((_, fil) => {
-//     return Array.from({length: numColums}).map((_, col) => {
-//         // Calcular la posición de la caja en la cuadrícula
-//         let x = col * gridSize;
-//         let y = fil * gridSize
-//         // Crear una nueva caja en la posición calculada
-//         let caja = new Caja(ctx, x, y);
-
-//         // Agregar la caja al array de cajas del juego
-//         this.cajas.push(caja);
-//         console.log(this.cajas)
-//         // console.log(JSON.stringify(this.cajas, null, 2)); //Esto imprimirá el objeto de manera más legible en la consola con una sangría de 2 espacios.
-
-//     })
-// }
-
-// )}

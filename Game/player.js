@@ -38,8 +38,8 @@ class Player {
         );
 
         // Dibuja cada bomba en el array, si no se hace esto no se pinta en el canvas.
-        this.bombas.forEach(bomba =>{
-            bomba.draw(); // llama a la funcion draw de la clase bomba para pintarla dentro del array por asi decirlo
+        this.bombas.forEach(element =>{
+            element.draw(); // llama a la funcion draw de la clase bomba para pintarla dentro del array por asi decirlo
         })
     }
 
@@ -89,8 +89,8 @@ class Player {
             this.vx = 0;
         }
 
-        this.bombas.forEach(bomba => {
-            bomba.move(); // llama a la funcion move de la clase bomba para pintar el movimiento dentro del array por asi decirlo
+        this.bombas.forEach(element => {
+            element.move(); // llama a la funcion move de la clase bomba para pintar el movimiento dentro del array por asi decirlo
         })
     }
 
