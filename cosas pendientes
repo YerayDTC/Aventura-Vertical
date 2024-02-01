@@ -1,58 +1,32 @@
-Para crear un fondo similar al de Bomberman en un juego 2D utilizando JavaScript y Canvas, puedes seguir estos pasos básicos. Vamos a crear un fondo con patrones de cuadrados que se asemejen al estilo de Bomberman. En este ejemplo, asumiré que ya tienes un archivo HTML con un elemento canvas en el cuerpo del documento.
-
-```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego con Fondo de Bomberman</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="gameCanvas"></canvas>
-  <script src="tu_script.js"></script>
-</body>
-</html>
-```
-
-Ahora, en tu archivo JavaScript (tu_script.js), puedes agregar el código para dibujar el fondo:
+¡Claro, con gusto! Vamos a desglosar esa línea de código paso a paso:
 
 ```javascript
-// Obtén el canvas y el contexto
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-
-// Establece el tamaño del canvas
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// Tamaño de los cuadrados del fondo
-const squareSize = 40;
-
-// Función para dibujar el fondo
-function drawBackground() {
-  // Colores para los cuadrados (puedes personalizarlos)
-  const colors = ['#D9D9D9', '#BFBFBF'];
-
-  for (let y = 0; y < canvas.height; y += squareSize) {
-    for (let x = 0; x < canvas.width; x += squareSize) {
-      const colorIndex = (x / squareSize + y / squareSize) % colors.length;
-      ctx.fillStyle = colors[colorIndex];
-      ctx.fillRect(x, y, squareSize, squareSize);
-    }
-  }
-}
-
-// Llama a la función para dibujar el fondo
-drawBackground();
+const fila = Math.floor(frameActual / numColumnas);
 ```
 
-En este código, la función `drawBackground` utiliza dos colores (gris claro y gris oscuro) para alternar entre los cuadrados del fondo. Puedes personalizar los colores según tus preferencias. Ajusta el tamaño de los cuadrados cambiando el valor de la variable `squareSize`.
+1. **`frameActual`**: Esta variable contiene el número del frame actual en tu animación. Imagina que tu animación tiene,
+por ejemplo, 12 frames.
 
-Este es un ejemplo básico, y puedes expandirlo según las necesidades de tu juego. Además, si estás desarrollando un juego más complejo, podrías considerar el uso de un motor de juegos como Phaser o PixiJS para simplificar el desarrollo.
+2. **`numColumnas`**: Esta variable indica cuántas columnas tienes en tu sprite. Supongamos que tu sprite es una
+cuadrícula de 3 filas y 4 columnas, entonces `numColumnas` sería 4.
+
+3. **División simple**: `frameActual / numColumnas` realiza una división simple. Siguiendo con el ejemplo, si
+`frameActual` es 5, entonces `5 / 4` sería 1.25. Este resultado nos daría un número decimal.
+
+4. **`Math.floor`**: Esta función toma un número decimal y lo redondea hacia abajo al entero más cercano. En el caso de
+`Math.floor(1.25)`, devolverá 1. Entonces, `Math.floor(frameActual / numColumnas)` asegura que obtengamos la parte
+entera de la división.
+
+**Ejemplo completo**:
+
+Si tienes un sprite con 3 filas y 4 columnas, y `frameActual` es 5, las operaciones serían:
+
+```javascript
+const fila = Math.floor(5 / 4);
+```
+
+- `5 / 4` es 1.25
+- `Math.floor(1.25)` es 1
+
+Entonces, en este caso, `fila` sería 1. Eso significa que el frame actual está en la segunda fila de tu sprite. Este
+valor se utilizará más adelante para seleccionar la porción correcta del sprite para dibujar en el canvas.

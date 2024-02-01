@@ -1,80 +1,23 @@
-// Definición de la clase Background
 class Background {
-    // Constructor de la clase que recibe un contexto (ctx)
-    constructor (ctx) {
-        // Asignación del contexto al objeto
-        this.ctx = ctx;
-        // Posición inicial en x e y (esquina superior izquierda)
-        this.x = 0;
-        this.y = 0;
-        // Ancho y alto del fondo, se establece igual al tamaño del canvas
-        this.w = this.ctx.canvas.width;
-        this.h = this.ctx.canvas.height;
-        // Creación de un objeto de imagen
-        this.img = new Image();
+    // Constructor que inicializa el fondo
+    constructor(ctx) {
+        this.ctx = ctx; // Contexto gráfico donde se dibujará el fondo
+        this.x = 0; // Posición horizontal inicial
+        this.y = 0; // Posición vertical inicial
+        this.w = this.ctx.canvas.width; // Ancho igual al ancho del canvas
+        this.h = this.ctx.canvas.height; // Alto igual al alto del canvas
+
+       
+        this.imgBackground = new Image(); // Creación de un objeto de imagen para el fondo
         // Establecimiento de la ruta de la imagen para el fondo
-        this.img.src = "../Public/img/pngtree-forest-landscape-arcade-game-background-image_674105.jpg";
-
-        this.imgBox = new Image();
-        this.imgBox.src = "../Public/img/cajaRota.png"
+        this.imgBackground.src = "../Public/img/pngtree-forest-landscape-arcade-game-background-image_674105.jpg";
     }
 
-    // Método para dibujar el fondo en el canvas
+    // Método para renderizar fondo y cajas en el canvas
     draw() {
-        // Dibuja la imagen en el contexto usando la posición, ancho y alto especificados
-        this.ctx.drawImage(this.img,this.x, this.y, this.w, this.h);
-        // Llama al método para dibujar el mapa de cajas
-        this.drawBoxMap();
-    }
-
-    // Método para dibujar el mapa de cajas
-    drawBoxMap() {
-        // Definir el tamaño de cada caja y el número de filas y columnas
-        var boxSize = this.w / 24 ; // Ajusta el tamaño de la caja según el número de columnas
-        var rows = 10;
-        var cols = 24;
-
-        let boxMap = [
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-        ];
-
-        // Crear un array bidimensional para representar el mapa de cajas
-         boxMap = new Array(rows);
-        for (var i = 0; i < rows; i++) {
-            boxMap[i] = new Array(cols);
-            for (var j = 0; j < cols; j++) {
-                // Inicializar el valor de cada caja a 1 o 0 según tus necesidades
-                // Por ejemplo, aquí se establece un patrón sencillo de alternancia
-                boxMap[i][j] = (i + j) % 2; // 1 o 0
-            }
-        }
-
-        for (var i = 0; i < rows; i++) {
-            for (var j = 0; j < cols; j++) {
-                var boxX = this.x + j * boxSize;
-                var boxY = this.y + i * boxSize;
-
-                // Dibujar caja
-                if (boxMap[i][j] === 1) {
-                    this.ctx.drawImage(this.imgBox, boxX, boxY, 10, 10)
-                    // this.ctx.fillStyle = "#009900"; // Color de la caja (puedes cambiarlo)
-                    // this.ctx.fillRect(boxX, boxY, boxSize, boxSize);
-                }
-            }
-        }
+        this.ctx.drawImage(this.imgBackground, this.x, this.y, this.w, this.h); // Renderiza el fondo
     }
 }
-
-
-
-
 
 
 // // Crear una instancia de la clase Background
