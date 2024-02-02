@@ -72,11 +72,13 @@ class Bomba {
             if (this.frameBomba > 2) {
                 this.frameBomba = 0;
             }
-        } else{
+        } else if(this.explosion === true){
             this.explosionTick++;
             if (this.explosionTick > 10) {
                 this.frameExplosion++;
+                this.explosion = true;
                 this.explosionTick = 0;
+                console.log("fuego " + this.explosion)
             }
     
             if (this.frameExplosion > 3) {
@@ -99,7 +101,7 @@ class Bomba {
             this.y + this.h > obstaculo.y
         ) {
             // Hay colisión con el jugador, inicia la animación del sprite
-            this.colliding = true;
+            this.explosion = true;
         }
     }
 }

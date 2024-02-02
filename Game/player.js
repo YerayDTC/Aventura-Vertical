@@ -21,6 +21,8 @@ class Player {
 
         this.bombas = []; // Array para almacenar las bombas
 
+        // this.game = new Game(ctx);
+
     }
 
     // Método para dibujar al jugador en el canvas
@@ -165,11 +167,36 @@ class Player {
         if (key === W || key === S) { this.vy = 0; this.ry = 0 }; // en dos lineas
     }
 
-    //!hacer el disparo de la bomba
+    //*esta funcion inserta la bomba en el array de bombas
     putBomb() {
         const bomba = new Bomba(this.ctx, this.x, this.y);
         this.bombas.push(bomba);
     }
+
+    //* Método para detectar colisiones con las cajas
+    // collidesWithBoxes(cajas) {
+    //     // Itera sobre todas las this.game.cajas
+    //     for (let i = 0; i < this.game.cajas.length; i++) {
+    //         let caja = this.game.cajas[i];
+    //         // Verifica si hay superposición de áreas
+    //         if (this.x < caja.x + caja.w &&
+    //             this.x + this.w > caja.x &&
+    //             this.y < caja.y + caja.h &&
+    //             this.y + this.h > caja.y) {
+    //             // Hay colisión, ajusta la posición del jugador
+    //             // Puedes elegir cómo quieres manejar la colisión, aquí hay un ejemplo simple:
+    //             // Detener al jugador y devolverlo a su posición anterior
+    //             this.x -= this.vx;
+    //             this.y -= this.vy;
+    //             // O puedes establecer la velocidad del jugador en 0 para evitar que siga moviéndose
+    //             // this.vx = this.vy = 0;
+    //             // Si necesitas más precisión, puedes ajustar la posición de manera más específica
+    //             // por ejemplo, empujando al jugador fuera de la caja
+    //             // this.x = Math.max(caja.x - this.w, Math.min(this.x, caja.x + caja.w));
+    //             // this.y = Math.max(caja.y - this.h, Math.min(this.y, caja.y + caja.h));
+    //         }
+    //     }
+    // }
  
     // Método para detectar colisiones con otro objeto
     collides(obstaculo) {
@@ -177,6 +204,7 @@ class Player {
             this.y < obstaculo.y + obstaculo.h &&
             this.x + this.w > obstaculo.x &&
             this.y + this.h > obstaculo.y) {
+                console.log("player colisionando")
         }
     }
 }

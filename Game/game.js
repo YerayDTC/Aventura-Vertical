@@ -72,20 +72,19 @@ class Game {
     // Método para comprobar colisiones
     checkCollision() {
 
-        // this.cajas.forEach((element) => {
-        //     if(element.collides(this.player)) {
-        //         element.colliding = true; // 
-        //     }
-        // });
-
-        //!hay que hacer que colisione con el fuego de la explosion
+        //*colision del fuego con la caja
         this.cajas.forEach((caja) => {
             this.player.bombas.forEach(bomba => {
-                if (caja.collides(bomba)) {
-                    caja.colliding = true; // 
+                if (bomba.explosion === true) {// cuando el fuego colisiona con las cajas simula la explotacion de las cajas con la bomba
+                   caja.collides(bomba); //simula la explotacion de las cajas con la bomba, usamos la bomba como colindante.
                 }   
             });
         });
+
+        //*colision del player con la caja
+        // this.cajas.forEach(caja => {
+        //     console.log("player colisionando con caja")
+        // });
     }
 
     // Método para configurar los listeners de teclado
